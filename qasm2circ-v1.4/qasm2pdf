@@ -9,11 +9,22 @@
 # Usage:  qasm2pdf foo.qasm
 #
 # Produces: foo.pdf  (and also foo.tex, foo.epsf)
+# foo.pdf in the same folder as input foo.qasm
+# foo.tex, foo.epsf in cache/
 
+
+#/pathto/foo.qasm
 foreach i ($*)
+        set filepath = `echo $i | sed "s/.qasm//"`	
+	set filename = `echo $filepath | rev | cut -d"/"  -f1 | rev`
+	set t=$filename
+	
+	echo filename: $filename  #foo
+	echo filepath: $filepath  #/pathto/foo
+	echo $t                   #foo  t for target
 
-        set t = `echo $i | sed "s/.qasm//"`
-
+	#put intermedium file here and then move to ./outdated/
+	#only export pdf file (or with tex file)
 	python qasm2tex.py $i >! $t.tex
 	if (-z $t.tex) then
 	    echo "error in qasm2tex on $t.tex! aborting."
@@ -21,5 +32,9 @@ foreach i ($*)
 	    latex $t
 	    dvips -D2400 -E -o $t.eps $t
 	    epstopdf $t.eps
+	    #export
+	    mv $t.pdf ${filepath}.pdf
+	    mv $t.* cache
 	endif
+	
 end
