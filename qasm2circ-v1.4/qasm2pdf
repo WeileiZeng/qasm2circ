@@ -35,6 +35,8 @@ foreach i ($*)
 	    #export
 	    mv $t.pdf ${filepath}.pdf
 	    mv $t.* cache
+	    echo Job done. Previewing ${filepath}.pdf
+	    open -a "preview" ${filepath}.pdf
 	endif
 	
 end
