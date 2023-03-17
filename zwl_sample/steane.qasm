@@ -44,17 +44,8 @@
   cnot	   q5,A2
 
 
-  nop 	   q6
-  nop 	   q6
-  nop 	   q6
-  nop 	   q6
-  nop 	   q6
-  nop 	   q6
-  nop 	   q6
-  nop 	   q6
-  nop 	   q6
-  nop 	   q6
-  nop 	   q6
+  nop 	   A0
+
   cnot	   q6,A0
   cnot	   q6,A1  
   cnot	   q6,A2
