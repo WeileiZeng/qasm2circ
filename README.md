@@ -12,6 +12,14 @@ cd qasm2circ-v1.4                           #cmd can only be called in this fold
 ./qasm2pdf ../zwl_sample/steane.qasm        #general cmd: ./qasm2pdf <path_to>/steane.qasm
 #output: ../zwl_sample/steane.pdf
 ```
+for python3 version
+```
+cd qasm2circ-v1.4-py3                           #cmd can only be called in this folder
+./qasm2pdf ../zwl_sample/steane.qasm        #general cmd: ./qasm2pdf <path_to>/steane.qasm
+#output: ../zwl_sample/steane.pdf
+```
+To save all intermediate files in a folder, one needs mannually create `cache` folder.
+
 ## Sample gates in qasm format
 
 ```
