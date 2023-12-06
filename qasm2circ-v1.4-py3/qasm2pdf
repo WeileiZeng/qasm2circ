@@ -1,0 +1,42 @@
+#!/bin/csh
+#
+# File:   qasm2pdf
+# Date:   23-Mar-04
+# Author: I. Chuang <ichuang@mit.edu>
+#
+# Shell script to convert qasm files to pdf, using the qasm2tex python script
+#
+# Usage:  qasm2pdf foo.qasm
+#
+# Produces: foo.pdf  (and also foo.tex, foo.epsf)
+# foo.pdf in the same folder as input foo.qasm
+# foo.tex, foo.epsf in cache/
+
+
+#/pathto/foo.qasm
+foreach i ($*)
+        set filepath = `echo $i | sed "s/.qasm//"`	
+	set filename = `echo $filepath | rev | cut -d"/"  -f1 | rev`
+	set t=$filename
+	
+	echo filename: $filename  #foo
+	echo filepath: $filepath  #/pathto/foo
+	echo $t                   #foo  t for target
+
+	#put intermedium file here and then move to ./outdated/
+	#only export pdf file (or with tex file)
+	python3 qasm2tex.py $i >! $t.tex
+	if (-z $t.tex) then
+	    echo "error in qasm2tex on $t.tex! aborting."
+	else
+	    latex $t
+	    dvips -D2400 -E -o $t.eps $t
+	    epstopdf $t.eps
+	    #export
+	    mv $t.pdf ${filepath}.pdf
+	    mv $t.* cache
+	    echo Job done. Previewing ${filepath}.pdf
+	    open -a "preview" ${filepath}.pdf
+	endif
+	
+end
